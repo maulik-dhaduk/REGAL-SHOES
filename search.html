@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+  <link rel="icon" type="image/x-icon" href="images/Favicon/154-2021_07_25-favicon_regal_250.jpg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .flex-wrapper {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="navbar-container"></div>
+  <div class="flex-wrapper">
+    <div class="container my-5">
+      <h2 class="fw-bold mb-4">Search Results</h2>
+
+      <div id="search-results" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+      </div>
+    </div>
+
+    <div id="footer-container"></div>
+  </div>
+
+  <script>
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get("query")?.toLowerCase() || "";
+    const products = JSON.parse(localStorage.getItem("All_product")) || [];
+    let likedItems = JSON.parse(localStorage.getItem("wishlist_product")) || [];
+
+    const filtered = products.filter(p =>
+      p.title.toLowerCase().includes(searchQuery) ||
+      p.brand_name.toLowerCase().includes(searchQuery)
+    );
+
+
+    function showResults() {
+      const container = document.getElementById("search-results");
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-center">No products found for "${searchQuery}".</p>`;
+        return;
+      }
+      container.innerHTML = ``
+      filtered.forEach(product => {
+        const col = document.createElement("div");
+        col.classList.add("col");
+
+        col.innerHTML = `
+            <div class="card h-100 d-flex flex-column border-0 position-relative">
+              <a class="nav-link"><i class="bi bi-heart fs-5 position-absolute top-0 end-0 m-2"></i></a>
+              <img src="${product.image}" class="card-img-top rounded go-detail" alt="Product image" style="cursor:pointer;">
+
+              <div class="card-body d-flex flex-column p-2">
+                <h6 class="mb-1">${product.brand_name}</h6>
+                <p class="small mb-1">${product.title}</p>
+                <p class="mb-1"><strong>${product.offer_rate}</strong> 
+                  <del class="text-muted">${product.orignal_rate}</del>
+                </p>
+
+                <button class="btn btn-dark w-100 mt-auto go-detail">View Detail</button>
+              </div>
+            </div>
+          `;
+
+
+        col.querySelectorAll(".go-detail").forEach(el => {
+          el.addEventListener("click", () => {
+            window.location.href = `product.html?id=${product.id}`;
+          });
+        });
+
+        container.appendChild(col);
+
+
+        let heartIcon = col.querySelector(".bi-heart")
+        let isLiked = likedItems.some(item => item.id == product.id);
+
+        if (isLiked) {
+          heartIcon.classList.replace("bi-heart", "bi-heart-fill");
+        }
+
+        let user_login = JSON.parse(localStorage.getItem("Sign_IN_Data"))
+
+        if (user_login) {
+          heartIcon.addEventListener("click", (e) => {
+            e.stopPropagation()
+            if (heartIcon.classList.contains("bi-heart")) {
+              heartIcon.classList.replace("bi-heart", "bi-heart-fill")
+              likedItems = likedItems.filter(item => item.id != product.id)
+              likedItems.push(product)
+
+            } else {
+              heartIcon.classList.replace("bi-heart-fill", "bi-heart")
+              likedItems = likedItems.filter(item => item.id !== product.id)
+
+            }
+            localStorage.setItem("wishlist_product", JSON.stringify(likedItems))
+            updateLikeCounter()
+          })
+
+        } else {
+          heartIcon.classList.replace("bi-heart-fill", "bi-heart");
+          heartIcon.addEventListener("click", (e) => {
+            e.stopPropagation()
+
+            window.location.href = "sign-in.html"
+          })
+        }
+      });
+    }
+
+    showResults();
+  </script>
+
+  <script src="js/global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

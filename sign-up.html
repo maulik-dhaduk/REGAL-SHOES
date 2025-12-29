@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <link rel="icon" type="image/x-icon" href="images/Favicon/154-2021_07_25-favicon_regal_250.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        #addMessage {
+            position: fixed;
+            bottom: 20px;
+            right: 18px;
+            background: red;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 9999;
+            max-width: 90vw;
+            word-wrap: break-word;
+            transition: 0.4s ease;
+            transform: translateX(150%);
+        }
+
+        #addMessage.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            #addMessage {
+                right: -100%;
+                left: auto;
+                transform: translateX(0);
+            }
+
+            #addMessage.show {
+                right: 20px;
+            }
+        }
+
+        body {
+            background: #f0f1f3;
+        }
+
+        .auth-card {
+            max-width: 450px;
+            margin: auto;
+            margin-top: 60px;
+        }
+
+        .brand-logo img {
+            width: 170px;
+        }
+
+        .form-control {
+            height: 48px;
+        }
+
+        .btn-lg {
+            height: 48px;
+            font-size: 17px;
+        }
+
+        .form-control:focus {
+            border: 2px solid black !important;
+            box-shadow: none !important;
+        }
+
+    </style>
+</head>
+
+<body class="bg-secondary-subtle">
+    <div id="navbar-container"></div>
+
+    <div class="Ragister container mb-5">
+        <div class="card shadow auth-card p-4 rounded-4">
+
+            <div class="text-center brand-logo mb-3">
+                <img src="https://www.regalshoes.in/cdn/shop/files/401-2021_11_15-RegalSHoes_Logo.webp?v=1741766668&width=310">
+            </div>
+
+            <h3 class="text-center mb-3 fw-bold">Create an Account</h3>
+
+            <form id="registrationForm" onsubmit="return validateForm(event)">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+                    <small id="userError" class="form-text text-danger"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                    <small id="emailError" class="form-text text-danger"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                    <small id="passError" class="form-text text-danger"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cpassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm your password">
+                    <small id="cpassError" class="form-text text-danger"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="mobile" class="form-label">Mobile Number</label>
+                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number">
+                    <small id="mobileError" class="form-text text-danger"></small>
+                </div>
+
+                <div class="mb-3">
+                <label class="form-label" for="login_type_dropdown">Select Type</label>
+                <div class="input-group">
+                    <select id="login_type_dropdown" class="form-select form-control" style="cursor: pointer;">
+                        <option value="">Select Type</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+                <small id="err_type" class="form-text text-danger"></small>
+                </div>
+
+
+                <button type="submit" class="btn btn-dark w-100">Register</button>
+
+                <p class="text-center mt-3">
+                    Already have an account?
+                    <a href="sign-in.html" class="link-underline-dark">
+                        <span class="text-black text-decoration-none fw-semibold" id="goLogin2" style="cursor:pointer">Login</span></a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div id="addMessage"></div>
+    <div id="footer-container"></div>
+
+    <script>
+        function validateForm() {
+            event.preventDefault();
+            let username = document.getElementById("username").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let cpassword = document.getElementById("cpassword").value.trim();
+            let mobile = document.getElementById("mobile").value.trim();
+            let roll_type = document.getElementById("login_type_dropdown").value.trim();
+
+            var sing_up = JSON.parse(localStorage.getItem("Sign_Up_Data")) || [];
+            var check_email = sing_up.find(user => user.email === email)
+
+            if (check_email) {
+                showMessage("Email Already exists")
+                return false;
+            }
+
+            let userError = document.getElementById("userError");
+            let emailError = document.getElementById("emailError");
+            let passError = document.getElementById("passError");
+            let cpassError = document.getElementById("cpassError");
+            let mobileError = document.getElementById("mobileError");
+            let err_type = document.getElementById("err_type");
+
+            userError.textContent = emailError.textContent = passError.textContent =
+                cpassError.textContent = mobileError.textContent = err_type.textContent = "";
+
+            let valid = true;
+
+            if (username === "") {
+                userError.textContent = "Username is required!";
+                valid = false;
+            }
+
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+            if (email === "") {
+                emailError.textContent = "Email is required!";
+                valid = false;
+            } else if (!emailPattern.test(email)) {
+                emailError.textContent = "Invalid email format!";
+                valid = false;
+            }
+
+            let count = 0;
+
+            if (password.length >= 8) {
+                if (/[A-Z]/.test(password)) count++;
+                if (/[a-z]/.test(password)) count++;
+                if (/[0-9]/.test(password)) count++;
+                if (/[@#\-!$%^&*()_+={}\[\]|\\;:'",<>\./?]/.test(password)) count++;
+            } else {
+                passError.textContent = "Password must be at least 8 characters long!";
+                valid = false;
+            }
+
+            if (count === 1 || count === 2) {
+                passError.textContent = "Weak Password! Use uppercase, lowercase, number, special char";
+                valid = false;
+            }
+
+            if (password !== cpassword) {
+                cpassError.textContent = "Password and Confirm Password must match";
+                valid = false;
+            }
+
+            let mobilePattern = /^[0-9]{10}$/;
+            if (!mobilePattern.test(mobile)) {
+                mobileError.textContent = "Enter valid 10-digit mobile number!";
+                valid = false;
+            }
+
+            if (roll_type === "") {
+                err_type.textContent = "Type is required!";
+                valid = false;
+            }
+
+            if (valid) {
+
+                let User = {
+                    username: username,
+                    email: email,
+                    password: password,
+                    mobile: mobile,
+                    roll_type: roll_type
+                };
+
+                sing_up.push(User);
+
+                localStorage.setItem("Sign_Up_Data", JSON.stringify(sing_up));
+
+                let box = document.getElementById("addMessage");
+                box.style.background="green"
+                showMessage("Form submitted successfully")
+
+                setTimeout(() => {
+                    window.location.href = "sign-in.html"
+                }, 1500);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        function showMessage(text) {
+            const box = document.getElementById("addMessage");
+            box.innerText = text;
+            box.classList.add("show");
+
+            setTimeout(() => {
+                box.classList.remove("show");
+            }, 2000);
+        }
+    </script>
+
+    <script src="js/global.js"></script>
+
+</body>
+
+</html>

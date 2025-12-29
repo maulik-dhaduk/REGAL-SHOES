@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Product</title>
+  <link rel="icon" type="image/x-icon" href="images/Favicon/154-2021_07_25-favicon_regal_250.jpg">
+  <style>
+    .flex-wrapper {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+
+    #addMessage {
+      position: fixed;
+      bottom: 20px;
+      right: 18px;
+      background: green;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 5px;
+      font-size: 14px;
+      z-index: 9999;
+      max-width: 90vw;
+      word-wrap: break-word;
+      transition: 0.4s ease;
+      transform: translateX(150%);
+    }
+
+    #addMessage.show {
+      transform: translateX(0);
+    }
+
+    @media (max-width: 768px) {
+      #addMessage {
+        right: -100%;
+        left: auto;
+        transform: translateX(0);
+      }
+
+      #addMessage.show {
+        right: 20px;
+      }
+    }
+
+    .icon-wrapper i {
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 6px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .icon-wrapper i:hover {
+      background: #dc3545;
+    }
+
+    .img-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-wrapper img {
+      transition: transform 0.4s ease;
+      display: block;
+    }
+
+    .img-wrapper:hover img {
+      transform: scale(1.08);
+    }
+  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div id="navbar-container"></div>
+  <div class="flex-wrapper">
+    <div class="container py-5">
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-12">
+
+          <div class="card shadow p-4">
+            <h3 class="mb-4 text-center" id="ontop">Add Product</h3>
+
+            <form action="" id="product_form">
+
+              <div class="mb-3">
+                <label class="form-label">Product Name</label>
+                <input type="text" name="pro_name" id="pro_name" class="form-control">
+                <span class="error" id="err_name"></span>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Main Image</label>
+                <input type="file" name="image" id="proimage" class="form-control">
+                <span class="error" id="err_image"></span>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">
+                  Sub Images (You can select multiple images at once)</label>
+                <input type="file" name="sub_images" id="sub_images" multiple class="form-control">
+                <span class="error" id="err_subimage"></span>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Product Original Price</label>
+                <input type="number" name="pro_org" id="pro_org" class="form-control">
+                <span class="error" id="err_org"></span>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Product Offer Price</label>
+                <input type="number" name="pro_offer" id="pro_offer" class="form-control">
+                <span class="error" id="err_offer"></span>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select id="category_dropdown" class="form-select"></select>
+                <span class="error" id="err_cat"></span>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Sub Category</label>
+                <select id="sub_category_dropdown" class="form-select"></select>
+                <span class="error" id="err_subcat"></span>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Brand Name</label>
+                <select id="brand_dropdown" class="form-select"></select>
+                <span class="error" id="err_brand"></span>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">Color</label>
+                <select id="color_dropdown" class="form-select"></select>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-dark w-100 add_product">Add Product</button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="container-fluid px-5">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 Show-Product">
+      </div>
+    </div>
+
+    <div id="addMessage"></div>
+
+    <div id="footer-container"></div>
+  </div>
+
+  <script src="js/add_product.js"></script>
+
+  <script src="js/global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

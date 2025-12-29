@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header</title>
+  <link rel="icon" type="image/x-icon" href="images/Favicon/154-2021_07_25-favicon_regal_250.jpg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <style>
+    .form-control:focus {
+            border: 2px solid black !important;
+            box-shadow: none !important;
+        }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+    <div class="container-fluid position-relative">
+
+      <button class="navbar-toggler position-sticky start-0" type="button" data-bs-toggle="collapse"
+        data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <a class="navbar-brand mx-auto text-center" href="index.html">
+        <img src="https://www.regalshoes.in/cdn/shop/files/401-2021_11_15-RegalSHoes_Logo.webp?v=1741766668&width=310"
+          class="img-fluid w-50" />
+      </a>
+
+      <div class="mobile-search d-lg-none ms-auto me-3">
+        <div class="search-wrapper">
+          <input type="search" id="searchInputMobile" class="form-control search-input" placeholder="Search">
+          <span class="separator">|</span>
+          <button type="button" class="search-btn" id="searchBtnMobile">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center 
+            flex-column flex-lg-row 
+            w-100 w-lg-auto 
+            text-center text-lg-start 
+            justify-content-center justify-content-lg-end">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown">
+              <span class="nav-text">Women</span>
+              <i class="bi bi-chevron-down"></i>
+              <i class="bi bi-chevron-up"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item"><span class="nav-text">Flats</span></a></li>
+              <li><a class="dropdown-item"><span class="nav-text">Heels</span></a></li>
+              <li><a class="dropdown-item"><span class="nav-text">Slides</span></a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <span class="nav-text">Men</span>
+              <i class="bi bi-chevron-down"></i>
+              <i class="bi bi-chevron-up"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item"><span class="nav-text">Casual</span></a></li>
+              <li><a class="dropdown-item"><span class="nav-text">Formal</span></a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <span class="nav-text">Brands</span>
+              <i class="bi bi-chevron-down"></i>
+              <i class="bi bi-chevron-up"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item"><span class="nav-text">Ivita</span></a></li>
+              <li><a class="dropdown-item"><span class="nav-text">Cobblerz</span></a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown admin-add-product">
+            <a class="nav-link" href="add_product.html">
+              <span class="nav-text">Add Products</span>
+            </a>
+          </li>
+
+          <li class="nav-item me-lg-2 d-none d-lg-block">
+            <div class="search-wrapper">
+              <input type="search" id="searchInputDesktop" class="form-control search-input" placeholder="Search">
+              <span class="separator">|</span>
+              <button type="button" class="search-btn" id="searchBtnDesktop">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </li>
+
+          <li class="nav-item useradd dropdown user-dropdown ms-lg-2">
+            <button type="button" id="userBtn">
+              <i class="bi bi-person fs-5" style="font-size: 1.7rem !important; vertical-align: middle;"></i>
+            </button>
+            <ul class="dropdown-menu user-menu"></ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="wishlist.html">
+              <span class="position-relative d-inline-flex align-items-center">
+                <i class="bi bi-heart fs-5"></i>
+                <span
+                  class="badge bg-danger rounded-pill position-absolute translate-middle start-100 top-0 p-1 small-badge like-counter"
+                  style="display:none;">0</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="cart.html">
+              <span class="position-relative d-inline-flex align-items-center">
+                <i class="bi bi-cart fs-5"></i>
+                <span
+                  class="badge bg-danger rounded-pill position-absolute translate-middle start-100 top-0 p-1 small-badge cart-counter"
+                  style="display:none;">0</span>
+              </span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>

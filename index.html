@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Shopping</title>
+  <link rel="icon" type="image/x-icon" href="images/Favicon/154-2021_07_25-favicon_regal_250.jpg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <style>
+    .sugar-video {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-width: 100%;
+    }
+
+    .wishlist-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 20;
+    }
+
+    .img-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-wrapper img {
+      transition: transform 0.4s ease;
+      display: block;
+    }
+
+    .img-wrapper:hover img {
+      transform: scale(1.08);
+    }
+
+    .category-btn {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .category-btn:hover {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="navbar-container"></div>
+
+  <div id="heroCarousel" class="carousel slide carousel-main" data-bs-ride="carousel" data-bs-interval="2000"
+    data-aos="fade-up">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="images/Banner/web.png" class="d-block w-100" />
+      </div>
+      <div class="carousel-item">
+        <img src="images/Banner/Jove_2.png" class="d-block w-100" />
+      </div>
+      <div class="carousel-item">
+        <img src="images/Banner/Cobblers.png" class="d-block w-100" />
+      </div>
+      <div class="carousel-item">
+        <img src="images/Banner/Ronnie_Grey_3.png"
+          class="d-block w-100" />
+      </div>
+    </div>
+
+
+
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+
+  <hr class="my-5">
+
+  <div class="container-fluid px-5">
+
+
+    <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
+      <h2 class="fw-bold mb-0">NEW ARRIVALS</h2>
+      <a href="filter_product.html" class="btn btn-outline-dark btn-md">View all</a>
+    </div>
+
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 new-arrivals" data-aos="zoom-in">
+    </div>
+
+
+    <div class="row g-3 my-5">
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-right">
+        <img src="images/Price/under_799_1.jpg"
+          class="img-fluid rounded-4 w-100" alt="">
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-right">
+        <img src="images/Price/Trending_Styles_Rs_799-1499_1.jpg"
+          class="img-fluid rounded-4 w-100" alt="">
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-right">
+        <img src="images/Price/New_Arrivals_1.jpg"
+          class="img-fluid rounded-4 w-100" alt="">
+      </div>
+    </div>
+
+
+    <div class="row g-3 my-5">
+      <div class="col-12 col-sm-12 col-lg-6" data-aos="fade-up">
+        <video class="sugar-video" autoplay muted loop>
+          <source src="video/Men.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="col-12 col-sm-12 col-lg-6" data-aos="fade-up">
+        <video class="sugar-video" autoplay muted loop>
+          <source src="video/Women.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+
+
+    <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
+      <h2 class="fw-bold mb-0">SHOP BY CATEGORY</h2>
+    </div>
+
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+
+      <div class="col" data-aos="flip-left">
+        <div class="card h-100 d-flex flex-column border-0 position-relative">
+
+          <div class="position-relative">
+            <img
+              src="images/SHOP-BY/Formals_600x_crop_center_ed7e1ba.jpg"
+              class="card-img-top rounded" alt="Product Image">
+            <button
+              class="btn bg-white category-btn position-absolute bottom-0 start-50 translate-middle-x mb-4 px-5 py-1 rounded"
+              data-category="Formal">
+              Formal
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="col" data-aos="flip-left">
+        <div class="card h-100 d-flex flex-column border-0 position-relative">
+
+          <div class="position-relative">
+            <img
+              src="images/SHOP-BY/Party_600x_crop_center_8b1d82a5.jpg"
+              class="card-img-top rounded" alt="Product Image">
+            <button
+              class="btn bg-white category-btn position-absolute bottom-0 start-50 translate-middle-x mb-4 px-5 py-1 rounded"
+              data-category="Party">
+              Party
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col" data-aos="flip-left">
+        <div class="card h-100 d-flex flex-column border-0 position-relative">
+
+          <div class="position-relative">
+            <img
+              src="images/SHOP-BY/Heels_600x_crop_center_b48383f5.jpg"
+              class="card-img-top rounded" alt="Product Image">
+            <button
+              class="btn bg-white category-btn position-absolute bottom-0 start-50 translate-middle-x mb-4 px-5 py-1 rounded"
+              data-category="Heels">
+              Heels
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col" data-aos="flip-left">
+        <div class="card h-100 d-flex flex-column border-0 position-relative">
+
+          <div class="position-relative">
+            <img
+              src="images/SHOP-BY/Loafers_600x_crop_center_51745cc.jpg"
+              class="card-img-top rounded" alt="Product Image">
+            <button
+              class="btn bg-white category-btn position-absolute bottom-0 start-50 translate-middle-x mb-4 px-5 py-1 rounded"
+              data-category="Loafers">
+              Loafers
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-5">
+      <h2 class="fw-bold mb-0">TOP BRANDS</h2>
+    </div>
+  </div>
+
+  <div class="container my-4">
+    <div class="row justify-content-center g-3">
+
+      <div class="col-12 col-md-4 col-lg-3" data-aos="zoom-in-up">
+        <img src="images/Brand/1_43dd43e8-d916-4d6c-a66c-dce11d.jpg"
+          class="img-fluid rounded" alt="Image 1">
+      </div>
+
+      <div class="col-12 col-md-4 col-lg-3" data-aos="zoom-in-up">
+        <img src="images/Brand/3_9ea9fb8d-48c8-4b3d-9074-57677c.jpg"
+          class="img-fluid rounded" alt="Image 2">
+      </div>
+
+      <div class="col-12 col-md-4 col-lg-3" data-aos="zoom-in-up">
+        <img src="images/Brand/2_e8fbfeab-9fa8-4601-8456-21722f.jpg"
+          class="img-fluid rounded" alt="Image 3">
+      </div>
+
+      <div class="col-12 col-md-4 col-lg-3" data-aos="zoom-in-up">
+        <img src="images/Brand/4_01703d45-2221-453f-b698-10bbb2.jpg"
+          class="img-fluid rounded" alt="Image 4">
+      </div>
+
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script type="module" src="js/script.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/global.js"></script>
+
+  <script>
+    document.querySelectorAll(".category-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const cat = this.getAttribute("data-category");
+        window.location.href = `filter_product.html?subcategory=${encodeURIComponent(cat)}`;
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>

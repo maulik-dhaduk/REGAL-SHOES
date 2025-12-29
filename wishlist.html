@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist</title>
+  <link rel="icon" type="image/x-icon" href="images/Favicon/154-2021_07_25-favicon_regal_250.jpg">
+  <style>
+    .flex-wrapper {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="navbar-container"></div>
+  <div class="flex-wrapper">
+    <div class="container-fluid px-5 py-5">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 Wishlist-Section">
+      </div>
+    </div>
+
+    <div id="footer-container"></div>
+  </div>
+
+
+
+  <script>
+
+    let likedItems = JSON.parse(localStorage.getItem("wishlist_product")) || [];
+    var Wishlist = document.querySelector(".Wishlist-Section")
+
+    function showEmptyWishlist() {
+  Wishlist.innerHTML = `
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <section class="py-5 text-center">
+        <div class="mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" 
+             viewBox="0 0 576 512" class="text-secondary">
+          <path d="M298.7 97.64L257 143.7L213.5 97.91C173.6 57.42 110 52.6 70.71 86.82L70.53 86.97C21.8 128.7 19.4 203.3 62.71 248.2L62.73 248.2L256.4 447.9C256.5 447.9 256.6 447.8 256.7 447.7L269.1 434.8C273.4 445.3 278.7 455.3 284.9 464.6L279.4 470.3C266.4 483.2 245.5 483.2 233.5 470.3L39.71 270.5C-16.22 212.5-13.23 116.6 49.7 62.68C102.8 16.41 184.1 24.47 234.3 73.46C235 74.19 235.7 74.92 236.5 75.67L256.4 96.64L275.4 75.67C276.3 74.76 277.2 73.87 278.1 72.99C328.3 24.42 408.3 16.56 463.2 62.68C506.1 100.1 520.7 157.6 507 208.7C497.4 204.2 487.3 200.5 476.8 197.8C486.3 158.8 474.8 115.3 442.4 87C400.9 52.33 338.2 57.7 298.7 97.64V97.64zM454.6 368L491.3 404.7C497.6 410.9 497.6 421.1 491.3 427.3C485.1 433.6 474.9 433.6 468.7 427.3L432 390.6L395.3 427.3C389.1 433.6 378.9 433.6 372.7 427.3C366.4 421.1 366.4 410.9 372.7 404.7L409.4 368L372.7 331.3C366.4 325.1 366.4 314.9 372.7 308.7C378.9 302.4 389.1 302.4 395.3 308.7L432 345.4L468.7 308.7C474.9 302.4 485.1 302.4 491.3 308.7C497.6 314.9 497.6 325.1 491.3 331.3L454.6 368zM576 368C576 447.5 511.5 512 432 512C352.5 512 288 447.5 288 368C288 288.5 352.5 224 432 224C511.5 224 576 288.5 576 368zM432 256C370.1 256 320 306.1 320 368C320 429.9 370.1 480 432 480C493.9 480 544 429.9 544 368C544 306.1 493.9 256 432 256z" />
+        </svg>
+        </div>
+        <h3 class="fw-bold mb-3">Wishlist is empty.</h3>
+        <p class="text-muted mb-1">You don't have any products in the wishlist yet.</p>
+        <p class="text-muted">You will find many interesting products on our shop page.</p>
+        <a href="index.html" class="btn btn-dark mt-3">Go to Shop</a>
+      </section>
+    </div>`;
+}
+
+
+    function Display_Wishlist_Product() {
+
+      Wishlist.innerHTML = ""
+
+      let user_login = JSON.parse(localStorage.getItem("Sign_IN_Data"))
+
+      if (user_login) {
+        if (likedItems.length === 0) {
+              showEmptyWishlist()
+        } else {
+          likedItems.map((pro) => {
+
+            let Wishlist_col = document.createElement("div")
+            Wishlist_col.classList.add("col")
+
+            Wishlist_col.innerHTML = `
+                  
+                  <div class="card h-100 d-flex flex-column border-0 position-relative">
+                    <img
+                      src="${pro.image}"
+                      class="card-img-top rounded go-detail" alt="Product Image" style="cursor:pointer;">
+                    <div class="card-body d-flex flex-column p-2">
+                      <h6 class="mb-1">${pro.brand_name}</h6>
+                      <p class="small mb-1">${pro.title}</p>
+                      <div class="d-flex justify-content-between">
+                        <div><p class="mb-1"><strong>${pro.offer_rate}</strong> <del class="text-muted">${pro.orignal_rate}</del></p></div>
+                        <div><i class="bi bi-trash fs-5 m-2" style="cursor: pointer;"></i></div>
+                      </div>
+                      <button class="btn btn-dark w-100 mt-auto go-detail">View Detail</button>
+                    </div>
+                  </div>`
+
+            Wishlist_col.querySelectorAll(".go-detail").forEach(el => {
+              el.addEventListener("click", () => {
+                window.location.href = `product.html?id=${pro.id}`;
+              });
+            });
+            Wishlist.appendChild(Wishlist_col)
+
+            let likeclear = Wishlist_col.querySelector(".bi-trash")
+
+            likeclear.addEventListener("click", () => {
+              likedItems = likedItems.filter(p => p.id !== pro.id);
+              localStorage.setItem("wishlist_product", JSON.stringify(likedItems))
+              Display_Wishlist_Product()
+              updateLikeCounter()
+            })
+          })
+        }
+
+      } else {
+                      showEmptyWishlist()
+
+      }
+    }
+    Display_Wishlist_Product()
+
+  </script>
+
+  <script src="js/global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

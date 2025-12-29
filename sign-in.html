@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign IN Form</title>
+    <link rel="icon" type="image/x-icon" href="images/Favicon/154-2021_07_25-favicon_regal_250.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            background: #f0f1f3;
+        }
+
+        .auth-card {
+            max-width: 450px;
+            margin: auto;
+            margin-top: 60px;
+        }
+
+        .brand-logo img {
+            width: 170px;
+        }
+
+        .form-control {
+            height: 48px;
+        }
+
+        .btn-lg {
+            height: 48px;
+            font-size: 17px;
+        }
+
+        .form-control:focus {
+            border: 2px solid black !important;
+            box-shadow: none !important;
+        }
+
+        .form-text {
+            font-size: 0.875rem;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+
+<body class="bg-secondary-subtle">
+    <div id="navbar-container"></div>
+
+    <div class="Login container mb-5">
+        <div class="card shadow auth-card p-4 rounded-4">
+
+            <div class="text-center brand-logo mb-3">
+                <img
+                    src="https://www.regalshoes.in/cdn/shop/files/401-2021_11_15-RegalSHoes_Logo.webp?v=1741766668&width=310">
+            </div>
+
+            <h3 class="text-center mb-3 fw-bold">Login to Your Account</h3>
+
+            <form id="login_form">
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                    <small id="emailError" class="form-text text-danger"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                        placeholder="Enter your password">
+                    <small id="passwordError" class="form-text text-danger"></small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="login_type_dropdown">Select Type</label>
+                    <div class="input-group">
+                        <select id="login_type_dropdown" class="form-select form-control" style="cursor: pointer;">
+                            <option value="">Select Type</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <small id="err_type" class="form-text text-danger"></small>
+                </div>
+
+
+                <button type="submit" class="btn btn-dark w-100">Login</button>
+
+                <p class="text-center mt-3">
+                    Don’t have an account?
+                    <a href="sign-up.html" class="link-underline-dark">
+                        <span class="text-black text-decoration-none fw-semibold" id="goLogin2"
+                            style="cursor:pointer">Register
+                        </span>
+                    </a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div id="addMessage"></div>
+    <div id="footer-container"></div>
+
+
+    <script>
+        document.getElementById("login_form").addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("err_type").textContent = "";
+
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let rolltype = document.getElementById("login_type_dropdown").value.trim();
+            let exist_user = JSON.parse(localStorage.getItem("Sign_Up_Data")) || [];
+
+            let emailError = document.getElementById("emailError");
+            let passwordError = document.getElementById("passwordError");
+            let err_type = document.getElementById("err_type");
+
+            let match_email = exist_user.find(user => user.email === email);
+            let match_password = exist_user.find(user => user.password === password);
+            let match_type = exist_user.find(user => user.roll_type === rolltype);
+
+
+            let hasError = false;
+
+            if (email === "") {
+                emailError.textContent = "Please fill Email id";
+                hasError = true;
+            } else if (!match_email) {
+                emailError.textContent = "Email id is not registered";
+                hasError = true;
+            }
+
+            if (password === "") {
+                passwordError.textContent = "Please fill Password";
+                hasError = true;
+            } else if (!match_password) {
+                passwordError.textContent = "Incorrect password";
+                hasError = true;
+            }
+
+            if (rolltype === "") {
+                err_type.textContent = "Type is required!";
+                hasError = true;
+            } else if (!match_type) {
+                err_type.textContent = "Type is not match";
+                hasError = true;
+            }
+
+            if (!hasError) {
+                let matchedUser = exist_user.find(user => user.email === email && user.password === password && user.roll_type === rolltype);
+                if (matchedUser) {
+                    localStorage.setItem("Sign_IN_Data", JSON.stringify(matchedUser));
+                    window.location.href = "index.html";
+                }
+            }
+        });
+    </script>
+
+    <script src="js/global.js"></script>
+
+</body>
+
+</html>

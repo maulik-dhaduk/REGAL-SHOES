@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="gu">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Filter page</title>
+  <link rel="icon" type="image/x-icon" href="images/Favicon/154-2021_07_25-favicon_regal_250.jpg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<style>
+  .filter-card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .filter-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: .8rem;
+  }
+</style>
+
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="container my-4">
+    <div class="row">
+
+      <div class="col-lg-3 mb-4">
+        <div class="filter-card">
+          <h6 class="filter-title">Filters</h6>
+
+          <label class="form-label small">Category</label>
+          <select class="form-select mb-3" id="categorySelect">
+            <option value="">All Categories</option>
+          </select>
+
+          <label class="form-label small">Max Price</label>
+          <input type="range" min="100" max="5000" value="5000" class="form-range mb-3" id="priceRange" />
+          <p class="small">Max: ₹<span id="priceValue">5000</span></p>
+
+
+          <label class="form-label small">Sort By</label>
+          <select class="form-select mb-3" id="sortSelect">
+            <option value="default">Default</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+          </select>
+
+
+          <button class="btn btn-sm btn-outline-secondary w-100">Clear Filters</button>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        <div id="filter-results" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+
+  <script>
+
+    const products = JSON.parse(localStorage.getItem("All_product")) || [];
+    let likedItems = JSON.parse(localStorage.getItem("wishlist_product")) || [];
+    const select = document.getElementById("categorySelect");
+    const container = document.getElementById("filter-results");
+    const uniqueCategories = [...new Set(products.map(p => p.category))];
+
+    uniqueCategories.forEach(cat => {
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      select.appendChild(opt);
+    });
+
+    function getParameter(name) {
+      let url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    const selectedSubCategory = getParameter("subcategory");
+    let filteredList = products;
+    const categorySelect = document.getElementById("categorySelect");
+    const optionValues = [...categorySelect.options].map(o => o.value);
+
+    if (selectedSubCategory) {
+      filteredList = products.filter(p => p.sub_category === selectedSubCategory);
+
+      const parentCategory = products.find(p => p.sub_category === selectedSubCategory)?.category;
+
+      if (parentCategory && optionValues.includes(parentCategory)) {
+        categorySelect.value = parentCategory;
+      }
+    }
+
+    displayProducts(filteredList);
+
+    function displayProducts(list) {
+      container.innerHTML = "";
+
+      if (list.length === 0) {
+        container.innerHTML = `<p class="text-center">No products found.</p>`;
+        return;
+      }
+
+      list.forEach(product => {
+        const col = document.createElement("div");
+        col.classList.add("col");
+
+        col.innerHTML = `
+        <div class="card h-100 d-flex flex-column border-0 position-relative">
+          <a class="nav-link"><i class="bi bi-heart fs-5 position-absolute top-0 end-0 m-2"></i></a>
+
+          <img src="${product.image}" class="card-img-top rounded go-detail" alt="Product image" style="cursor:pointer;">
+
+          <div class="card-body d-flex flex-column p-2">
+            <h6 class="mb-1">${product.brand_name}</h6>
+            <p class="small mb-1">${product.title}</p>
+            <p class="mb-1"><strong>${product.offer_rate}</strong>
+              <del class="text-muted">${product.orignal_rate}</del>
+            </p>
+
+            <button class="btn btn-dark w-100 mt-auto go-detail">View Detail</button>
+          </div>
+        </div>
+      `;
+
+        col.querySelectorAll(".go-detail").forEach(el => {
+          el.addEventListener("click", () => {
+            window.location.href = `product.html?id=${product.id}`;
+          });
+        });
+
+        let heartIcon = col.querySelector(".bi-heart");
+        let isLiked = likedItems.some(item => item.id == product.id);
+
+        if (isLiked) heartIcon.classList.replace("bi-heart", "bi-heart-fill");
+
+        let user_login = JSON.parse(localStorage.getItem("Sign_IN_Data"));
+
+        if (user_login) {
+          heartIcon.addEventListener("click", (e) => {
+            e.stopPropagation();
+
+            if (heartIcon.classList.contains("bi-heart")) {
+              heartIcon.classList.replace("bi-heart", "bi-heart-fill");
+              likedItems.push(product);
+            } else {
+              heartIcon.classList.replace("bi-heart-fill", "bi-heart");
+              likedItems = likedItems.filter(item => item.id !== product.id);
+            }
+
+            localStorage.setItem("wishlist_product", JSON.stringify(likedItems));
+            updateLikeCounter();
+          });
+
+        } else {
+          heartIcon.addEventListener("click", (e) => {
+            e.stopPropagation();
+            window.location.href = "sign-in.html";
+          });
+        }
+
+        container.appendChild(col);
+      });
+    }
+
+
+    function sortProducts(list, type) {
+      let sortedList = [...list];
+
+      function cleanPrice(price) {
+        return Number(String(price).replace(/[^0-9.]/g, ""));
+      }
+
+      if (type === "low-high") {
+        sortedList.sort((a, b) => cleanPrice(a.offer_rate) - cleanPrice(b.offer_rate));
+      }
+      else if (type === "high-low") {
+        sortedList.sort((a, b) => cleanPrice(b.offer_rate) - cleanPrice(a.offer_rate));
+      }
+
+      return sortedList;
+    }
+
+
+
+    document.getElementById("categorySelect").addEventListener("change", applyFilters);
+    document.getElementById("sortSelect").addEventListener("change", applyFilters);
+
+    const priceRange = document.getElementById("priceRange");
+    const priceValue = document.getElementById("priceValue");
+
+
+    priceRange.addEventListener("input", () => {
+      priceValue.textContent = priceRange.value;
+      applyFilters();
+    });
+
+    function applyFilters() {
+      let category = document.getElementById("categorySelect").value;
+      let sortType = document.getElementById("sortSelect").value;
+      let maxPrice = Number(priceRange.value);
+
+      let list = category === "" ? products : products.filter(p => p.category === category);
+
+      list = list.filter(p => cleanPrice(p.offer_rate) <= maxPrice);
+
+      list = sortProducts(list, sortType);
+
+      displayProducts(list);
+    }
+
+    function cleanPrice(price) {
+      return Number(String(price).replace(/[^0-9.]/g, ""));
+    }
+
+
+    document.querySelector(".btn-outline-secondary").addEventListener("click", () => {
+      document.getElementById("categorySelect").value = "";
+      document.getElementById("priceRange").value = 5000;
+      document.getElementById("priceValue").textContent = 5000;
+      document.getElementById("sortSelect").value = "default";
+
+      displayProducts(products);
+    });
+
+  </script>
+
+
+  <script src="js/global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
