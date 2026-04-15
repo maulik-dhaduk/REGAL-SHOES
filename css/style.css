@@ -101,6 +101,12 @@ nav.navbar {
     width: 100%;
     height: 75vh;
     object-fit: cover;
+    display: block;
+}
+
+.carousel-main {
+    max-height: 75vh;
+    overflow: hidden;
 }
 
 .carousel-control-prev,
