@@ -198,19 +198,95 @@ nav.navbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap; 
     }
 
-    .mobile-search {
-        flex-shrink: 0;
-    }
-
-    .navbar-toggler {
-        flex-shrink: 0;
+    .navbar-toggler, .navbar-brand, .mobile-search {
+        flex: 0 1 auto; 
     }
 
     .navbar-brand {
-        flex-grow: 1;
+        margin: 0 !important;
         text-align: center;
+        flex: 1; 
     }
-    
+
+    .mobile-search {
+        margin: 0 !important;
+    }
+}
+
+@media (max-width: 380px) {
+    nav.navbar .container-fluid {
+        display: grid !important;
+        grid-template-columns: 40px 1fr 100px !important; 
+        align-items: center !important;
+        gap: 0 !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        flex-wrap: wrap; 
+    }
+
+    .navbar-toggler {
+        grid-column: 1;
+        width: 35px !important;
+        height: 35px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        position: relative !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        border: none !important;
+    }
+
+    .navbar-brand {
+        grid-column: 2;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        min-width: 0;
+    }
+
+    .navbar-brand img {
+        width: 55px !important; 
+        height: auto !important;
+    }
+
+    .mobile-search {
+        grid-column: 3;
+        margin: 0 !important;
+        width: 100px !important;
+        display: block !important;
+    }
+
+    .search-wrapper {
+        width: 100% !important;
+    }
+
+    .search-input {
+        font-size: 11px !important;
+        padding-right: 22px !important;
+        padding-left: 6px !important;
+        height: 28px !important;
+    }
+
+    .separator {
+        right: 18px !important;
+        font-size: 12px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+
+    .search-btn {
+        right: 2px !important;
+        font-size: 10px !important;
+    }
+
+    .navbar-collapse {
+        grid-column: 1 / span 3;
+        width: 100% !important;
+    }
 }
