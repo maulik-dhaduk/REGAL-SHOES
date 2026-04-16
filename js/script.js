@@ -23,6 +23,7 @@ function Display_Product() {
         src="${pro.image}"
         class="card-img-top go-detail" 
         alt="Product Image" 
+        loading="lazy"
         style="cursor: pointer;">
     </div>
 
